@@ -7,7 +7,7 @@ runtime! macros/matchit.vim
 
 set tabstop=2
 set softtabstop=2
-set shiftwidth=2
+set shiftwidth=2 
 set autoindent
 set number
 set expandtab
@@ -47,8 +47,11 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'mxw/vim-jsx'
 Plugin 'briancollins/vim-jst'
 Plugin 'bling/vim-airline'
-Plugin 'b2l/molokai'
+Plugin 'whatyouhide/vim-gotham'
 Plugin 'scrooloose/syntastic'
+Plugin 'nono/vim-handlebars'
+Plugin 'editorconfig/editorconfig-vim'
+
 
 filetype plugin indent on
 set wildignore+=*~,*#,public/assets/**
@@ -69,7 +72,14 @@ function! SelectaCommand(choice_command, selecta_args, vim_command)
 endfunction
 " Find all files in all non-dot directories starting in the working directory.
 " Fuzzy select one of those. Open the selected file with :e.
-nnoremap <C-p> :call SelectaCommand("find * -type f", "", ":e")<cr>
+
+if filereadable(".git/config")
+  let find_cmd = "git ls-files . -co --exclude-standard"
+else
+  let find_cmd = "find * -type f"
+endif
+nnoremap <C-p> :call SelectaCommand(find_cmd, "", ":e")<cr>
+
 
 " CtrlP
 "let g:ctrlp_max_files = 10000
@@ -159,5 +169,12 @@ nmap <Tab> :tabn<CR>
 nmap <S-Tab> :tabp<CR>
 nmap <C-t> :tabnew<CR>
 
-colorscheme molokai
-let g:airline_theme = 'molokai'
+colorscheme gotham
+hi MatchParen cterm=bold ctermbg=none ctermfg=33
+
+" Coffeescript linter
+let g:syntastic_coffee_coffeelint_args = "--csv"
+
+" open files in directory of current file
+cnoremap %% <c-r>=expand('%:h').'/'<cr>
+map <leader>e :edit %%

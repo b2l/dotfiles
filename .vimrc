@@ -47,10 +47,10 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'mxw/vim-jsx'
 Plugin 'briancollins/vim-jst'
 Plugin 'bling/vim-airline'
-Plugin 'whatyouhide/vim-gotham'
 Plugin 'scrooloose/syntastic'
 Plugin 'nono/vim-handlebars'
 Plugin 'editorconfig/editorconfig-vim'
+Plugin 'whatyouhide/vim-gotham'
 
 
 filetype plugin indent on

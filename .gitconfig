@@ -1,0 +1,29 @@
+[user]
+	name = Nicolas MEDDA
+	email = b2l.powa@gmail.com
+[push]
+  default = current
+[merge]
+  ff = false
+[branch]
+  autosetuprebase = always
+
+[alias]
+  st = status
+  pr = pull --rebase
+  ci = commit
+  co = checkout
+  graph = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --date=short --abbrev-commit
+  l = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --date=short --abbrev-commit
+  staging = !git tag | grep staging | tail -n 1 | xargs git show -s
+  production = !git tag | grep production | tail -n 1 | xargs git show -s
+  undeployed = !git log master `git tag|grep production|tail -n 1`..HEAD
+
+[color]
+  ui = true
+[core]
+  excludesfile = /Users/nmedda/.gitignore_global
+[filter "media"]
+	clean = git media clean %f
+	smudge = git media smudge %f
+	required = true

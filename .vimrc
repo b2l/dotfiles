@@ -7,7 +7,7 @@ runtime! macros/matchit.vim
 
 set tabstop=2
 set softtabstop=2
-set shiftwidth=2 
+set shiftwidth=2
 set autoindent
 set number
 set expandtab
@@ -27,7 +27,6 @@ Plugin 'gmarik/vundle'
 Plugin 'godlygeek/tabular'
 Plugin 'mattn/gist-vim'
 Plugin 'mattn/webapi-vim'
-Plugin 'scrooloose/nerdtree'
 Plugin 'sjl/gundo.vim'
 Plugin 'tjennings/git-grep-vim'
 Plugin 'tpope/vim-abolish'
@@ -40,17 +39,15 @@ Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-ruby/vim-ruby'
-Plugin 'groenewege/vim-less'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'mxw/vim-jsx'
-Plugin 'briancollins/vim-jst'
 Plugin 'bling/vim-airline'
-Plugin 'scrooloose/syntastic'
 Plugin 'nono/vim-handlebars'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'whatyouhide/vim-gotham'
+Plugin 'tpope/vim-dispatch'
 
 
 filetype plugin indent on
@@ -89,9 +86,6 @@ nnoremap <C-p> :call SelectaCommand(find_cmd, "", ":e")<cr>
 autocmd FileType go match ErrorMsg //
 autocmd FileType go set makeprg=go\ build
 
-" Set colorscheme
-" colorscheme sexy-railscasts-256 " desert256
-
 " Autocommands
 autocmd BufWritePre *.rb,*.js,*.erb,*.feature %substitute/ / /ge " Remove nbsp
 autocmd User Rails silent! Rlcd " Rails plugin
@@ -127,26 +121,14 @@ map <Down> :cnext<CR>
 map <S-Up> :cpfile<CR>
 map <S-Down> :cnfile<CR>
 
-" save w/ ctrl-s
-map <C-s> :write<CR>
-imap <C-s> <Esc>:write<CR>i
-
 " Copy current file and line number to unnamed register ("")
 nmap <Leader>l Os rspec <Esc>"%pA:<C-R>=line(".")<CR><Esc>0d$"uu
-
-" vim-commentary
-xmap ,,  \\
-nmap ,,  \\
-nmap ,,, \\\
 
 " ZenCoding
 let g:user_zen_expandabbr_key = '<c-e>'
 
-" NERDTree
-map <silent> <Leader>n :NERDTreeToggle<CR>
-
 " Remap jump to tag
-map <silent> å <C-]>
+map <silent> [ <C-]>
 
 " Delete trailing space
 map <silent> <Leader>s m`:%s/\s\+$//<CR>``
@@ -160,10 +142,6 @@ cnoremap <C-B> <Left>
 cnoremap <C-D> <Del>
 cnoremap <C-K> <C-E><C-U>
 
-" Underline with = / - with F5 / F6
-nnoremap gmu yyp<c-v>$r-:redraw!<CR>
-nnoremap gmU yyp<c-v>$r=:redraw!<CR>
-
 " Tab switching
 nmap <Tab> :tabn<CR>
 nmap <S-Tab> :tabp<CR>
@@ -172,9 +150,21 @@ nmap <C-t> :tabnew<CR>
 colorscheme gotham
 hi MatchParen cterm=bold ctermbg=none ctermfg=33
 
-" Coffeescript linter
-let g:syntastic_coffee_coffeelint_args = "--csv"
-
 " open files in directory of current file
 cnoremap %% <c-r>=expand('%:h').'/'<cr>
 map <leader>e :edit %%
+
+" system clipboard integration
+nnoremap gy "*y
+nnoremap gY "*Y
+nnoremap gp "*p
+nnoremap gP "*P
+
+vnoremap gy "*y
+vnoremap gp "*p
+vnoremap gP "*P
+
+" Start ruby test
+autocmd FileType ruby let b:Dispatch = 'rspec %'
+autocmd FileType javascript let b:Dispatch = 'mocha %'
+nnoremap <F9> :Dispatch<CR>
